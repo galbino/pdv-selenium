@@ -1,21 +1,19 @@
 package com.uff.pdvselenium;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import com.codeborne.selenide.selector.ByText;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-public class ProductsTest {
+public class GrupoSeleniumTest {
+    private final String BASE_URL = "http://localhost:8080";
 
     @BeforeAll
     public static void setUpAll() {
@@ -25,12 +23,12 @@ public class ProductsTest {
 
     @BeforeEach
     public void setUp() {
-        open("http://localhost:8080/");
+        open(BASE_URL);
         $("input[id=user]").sendKeys("gerente");
         $("input[id=password]").sendKeys("123");
         $("button[type=submit]").click();
         $$("img").findBy(Condition.attribute("alt", "Produto")).click();
-        $$("a").findBy(Condition.href("/produto")).click();
+        $$("a").findBy(Condition.href("/grupo")).click();
     }
 
     @AfterEach
@@ -39,21 +37,13 @@ public class ProductsTest {
     }
 
     @Test
-    public void logout() {
-        $("button[type=submit]").click();
-        assert WebDriverRunner.getWebDriver().getCurrentUrl().equals("http://localhost:8080/login");
-    }
-
-    @Test
-    public void createProduto() {
+    public void createGrupo(){
+        int amountBefore = $("tbody").findAll("tr").size();
         $$("a").findBy(Condition.text("Novo")).click();
-        assert WebDriverRunner.getWebDriver().getCurrentUrl().equals("http://localhost:8080/produto/form");
-        $("#descricao").sendKeys("teste");
-        $("#valorCusto").sendKeys("1000");
-        $("#validade").sendKeys("16/09/2022");
-        $("#valorVenda").sendKeys("1500");
-        $("#unidade").sendKeys("10");
-        $("input[name=enviar]").click();
-        assert $$("span").findBy(Condition.text("Produdo cadastrado com sucesso")).isDisplayed();
+        $("#descricao").sendKeys("Alimentação");
+        $("input[value=Salvar]").click();
+        assert $$("span").findBy(Condition.text("Grupo salvo com sucesso")).isDisplayed();
+        $(byText("Listar")).click();
+        assert $("tbody").findAll("tr").size() > amountBefore;
     }
 }
