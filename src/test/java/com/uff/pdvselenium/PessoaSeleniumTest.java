@@ -62,7 +62,7 @@ public class PessoaSeleniumTest {
         $("#cep").sendKeys("20735220");
         $("#referencia").sendKeys("Posto de Saúde do Engenho de Dentro");
         $("a[href='#menu2']").click();
-        $("#fone").sendKeys("25939536");
+        $("#fone").sendKeys("21980357509");
         $("#tipo").sendKeys("CELULAR");
         $("input[value=Salvar]").click();
         confirm("Pessoa salva com sucesso");

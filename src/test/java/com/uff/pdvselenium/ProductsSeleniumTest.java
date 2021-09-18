@@ -99,7 +99,7 @@ public class ProductsSeleniumTest {
         for (int i = 0; i < len; i++) {
             SelenideElement product = $("tbody").findAll("tr").get(i);
             product.find("a").click();
-            if ($("#ativo").text().equals("ATIVO")) {
+            if ($("#situacao").text().equals("ATIVO")) {
                 found = 1;
                 break;
             }
@@ -116,9 +116,9 @@ public class ProductsSeleniumTest {
             ElementsCollection bodyList = $("tbody").findAll("tr");
             bodyList.get(bodyList.size()-1).find("a").click();
         }
-        $("#ativo").sendKeys("INATIVO");
+        $("#situacao").sendKeys("INATIVO");
         $("input[name=enviar]").click();
-        assert $("#ativo").text().equals("INATIVO");
+        assert $("#situacao").text().equals("INATIVO");
     }
 
     @Test
@@ -129,7 +129,7 @@ public class ProductsSeleniumTest {
         for (int i = 0; i < len; i++) {
             SelenideElement product = $("tbody").findAll("tr").get(i);
             product.find("a").click();
-            if ($("#ativo").text().equals("INATIVO")) {
+            if ($("#situacao").text().equals("INATIVO")) {
                 found = 1;
                 break;
             }
@@ -142,14 +142,14 @@ public class ProductsSeleniumTest {
             $("#validade").sendKeys("16/09/2022");
             $("#valorVenda").sendKeys("1500");
             $("#unidade").sendKeys("10");
-            $("#ativo").sendKeys("INATIVO");
+            $("#situacao").sendKeys("INATIVO");
             $("input[name=enviar]").click();
             ElementsCollection bodyList = $("tbody").findAll("tr");
             bodyList.get(bodyList.size()-1).find("a").click();
             assert $("#ativo").text().equals("INATIVO");
         }
-        $("#ativo").sendKeys("ATIVO");
+        $("#situacao").sendKeys("ATIVO");
         $("input[name=enviar]").click();
-        assert $("#ativo").text().equals("ATIVO");
+        assert $("#situacao").text().equals("ATIVO");
     }
 }
