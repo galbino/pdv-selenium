@@ -59,7 +59,7 @@ public class PedidoSeleniumTest {
         $(byXpath("//select[@id='codigoProduto']//..//button")).click();
         $(byXpath("//select[@id='codigoProduto']//..//input")).sendKeys("Picolé", Keys.ENTER);
         $("#js-url").click();
-        Selenide.sleep(500);
+        Selenide.sleep(1000);
         $("#btn-venda").click();
         $("#pagamento").sendKeys("À vista");
         $$("a").find(Condition.text("Pagar")).click();
@@ -90,7 +90,7 @@ public class PedidoSeleniumTest {
         $(byXpath("//select[@id='codigoProduto']//..//button")).click();
         $(byXpath("//select[@id='codigoProduto']//..//input")).sendKeys("Picolé", Keys.ENTER);
         $("#js-url").click();
-        Selenide.sleep(500);
+        Selenide.sleep(1000);
         $("#btn-venda").click();
         $("#pagamento").sendKeys("À vista");
         $$("a").find(Condition.text("Pagar")).click();
@@ -106,7 +106,7 @@ public class PedidoSeleniumTest {
         $("#observacao").sendKeys("Teste Selenium");
         $("#btn-salva").click();
         $("#js-url").click();
-        Selenide.sleep(500);
+        Selenide.sleep(1000);
         $("#btn-venda").click();
         $("#pagamento").sendKeys("À vista");
         $$("a").find(Condition.text("Pagar")).click();
