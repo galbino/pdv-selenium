@@ -87,27 +87,54 @@ public class CaixaSeleniumTest {
 
     @Test
     @Order(5)
-    public void transferirCaixa() {
-        $("td a img").click();
-        $("#btnTransferencia").click();
-        $("#vltotal").sendKeys("30000");
-        $("#idobservacao").sendKeys("Transferência entre caixas");
-        $("#iddestino").sendKeys("Caixa preferencial - 1");
-        $$("a").findBy(Condition.text("Confirmar")).click();
-        confirm("Transferência realizada com sucesso");
-        sleep(500);
-        SelenideElement el = $$("tr td").findBy(Condition.text("Transferência entre caixas"));
-        assert el.exists();
-        assert el.find(By.xpath("..//td[contains(text(), 'R$ -300,00')]")).exists();
-        assert el.find(By.xpath("..//td[contains(text(), 'Transferência entre caixas')]")).exists();
+    public void createBanco() {
+        open(BASE_URL);
+        $$("img").findBy(Condition.attribute("alt", "Caixa")).click();
+        $$("a").findBy(Condition.text("Abrir Novo")).click();
+        $("#descricao").sendKeys("Cofre");
+        $("#caixatipo").sendKeys("COFRE");
+        $("#valorAbertura").sendKeys("25000");
+        $$("a").findBy(Condition.text("Abrir")).click();
+        assert $$("tr[class=success] td").find(Condition.text("R$ 250")).should(exist).exists();
     }
 
     @Test
     @Order(6)
+    public void transferirCaixa() {
+        open(BASE_URL);
+        $$("img").findBy(Condition.attribute("alt", "Caixa")).click();
+        $("td a img[src='/icons/glyphicons-459-money.png']").click();
+        $("#btnTransferencia").click();
+        $("#vltotal").sendKeys("30000");
+        $("#idobservacao").sendKeys("Transferência entre caixas");
+        $("#iddestino").sendKeys("Cofre");
+        $$("a").findBy(Condition.text("Confirmar")).click();
+        confirm("Transferência realizada com sucesso");
+        sleep(500);
+        SelenideElement el = $$("tr td").findBy(Condition.text("Saída de transferência"));
+        assert el.exists();
+        assert el.find(By.xpath("..//td[contains(text(), 'R$ -300,00')]")).exists();
+        assert el.find(By.xpath("..//td[contains(text(), 'Saída de transferência')]")).exists();
+    }
+
+    @Test
+    @Order(7)
     public void fecharCaixa() {
         open(BASE_URL);
         $$("img").findBy(Condition.attribute("alt", "Caixa")).click();
-        $("td a img").click();
+        $("td a img[src='/icons/glyphicons-459-money.png']").click();
+        $("#btnfechacaixa").click();
+        $("#admsenha").sendKeys("123");
+        $$("div a").find(Condition.text("Fechar")).click();
+        confirm("Caixa fechado com sucesso");
+    }
+
+    @Test
+    @Order(7)
+    public void fecharCofre() {
+        open(BASE_URL);
+        $$("img").findBy(Condition.attribute("alt", "Caixa")).click();
+        $("td a img[src='/icons/cofre.png']").click();
         $("#btnfechacaixa").click();
         $("#admsenha").sendKeys("123");
         $$("div a").find(Condition.text("Fechar")).click();
