@@ -28,7 +28,7 @@ public class PessoaSeleniumTest {
         $("input[id=user]").sendKeys("gerente");
         $("input[id=password]").sendKeys("123");
         $("button[type=submit]").click();
-        $$("img").findBy(Condition.attribute("alt", "Pessoas")).click();
+        $$("a").findBy(Condition.text("Pessoas")).click();
     }
 
     @AfterEach

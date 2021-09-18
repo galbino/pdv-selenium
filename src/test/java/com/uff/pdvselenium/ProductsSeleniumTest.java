@@ -41,6 +41,11 @@ public class ProductsSeleniumTest {
     @Test
     public void createProdutoValid() {
         int amountBefore = $("tbody").findAll("tr").size();
+        while ($("a[class='btn btn-info btn-proxima']").exists()) {
+            $("a[class='btn btn-info btn-proxima']").click();
+            amountBefore += $("tbody").findAll("tr").size();
+        }
+
         $$("a").findBy(Condition.text("Novo")).click();
         assert WebDriverRunner.getWebDriver().getCurrentUrl().equals(BASE_URL + "/produto/form");
         $("#descricao").sendKeys("teste");
@@ -50,12 +55,22 @@ public class ProductsSeleniumTest {
         $("#unidade").sendKeys("10");
         $("input[name=enviar]").click();
         assert $$("span").findBy(Condition.text("Produdo cadastrado com sucesso")).isDisplayed();
-        assert $("tbody").findAll("tr").size() > amountBefore;
+
+        int newAmount = $("tbody").findAll("tr").size();
+        while ($("a[class='btn btn-info btn-proxima']").exists()) {
+            $("a[class='btn btn-info btn-proxima']").click();
+            newAmount += $("tbody").findAll("tr").size();
+        }
+        assert newAmount > amountBefore;
     }
 
     @Test
     public void createProdutoInvalid() {
         int amountBefore = $("tbody").findAll("tr").size();
+        while ($("a[class='btn btn-info btn-proxima']").exists()) {
+            $("a[class='btn btn-info btn-proxima']").click();
+            amountBefore += $("tbody").findAll("tr").size();
+        }
         $$("a").findBy(Condition.text("Novo")).click();
         assert WebDriverRunner.getWebDriver().getCurrentUrl().equals(BASE_URL + "/produto/form");
         $("#descricao").sendKeys("Detergente");
@@ -67,7 +82,13 @@ public class ProductsSeleniumTest {
         $("input[name=enviar]").click();
         Assertions.assertFalse($$("span").findBy(Condition.text("Produdo cadastrado com sucesso")).isDisplayed());
         $(byText("Listar")).click();
-        assert $("tbody").findAll("tr").size() == amountBefore;
+
+        int newAmount = $("tbody").findAll("tr").size();
+        while ($("a[class='btn btn-info btn-proxima']").exists()) {
+            $("a[class='btn btn-info btn-proxima']").click();
+            newAmount += $("tbody").findAll("tr").size();
+        }
+        assert newAmount > amountBefore;
     }
 
     @Test
