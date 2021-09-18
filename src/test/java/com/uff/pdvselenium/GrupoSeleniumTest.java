@@ -39,11 +39,22 @@ public class GrupoSeleniumTest {
     @Test
     public void createGrupo(){
         int amountBefore = $("tbody").findAll("tr").size();
+        while ($("a[class='btn btn-info btn-proxima']").exists()) {
+            $("a[class='btn btn-info btn-proxima']").click();
+            amountBefore += $("tbody").findAll("tr").size();
+        }
+
         $$("a").findBy(Condition.text("Novo")).click();
         $("#descricao").sendKeys("Alimentação");
         $("input[value=Salvar]").click();
         assert $$("span").findBy(Condition.text("Grupo salvo com sucesso")).isDisplayed();
         $(byText("Listar")).click();
-        assert $("tbody").findAll("tr").size() > amountBefore;
+
+        int newAmount = $("tbody").findAll("tr").size();
+        while ($("a[class='btn btn-info btn-proxima']").exists()) {
+            $("a[class='btn btn-info btn-proxima']").click();
+            newAmount += $("tbody").findAll("tr").size();
+        }
+        assert newAmount > amountBefore;
     }
 }

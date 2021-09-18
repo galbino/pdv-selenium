@@ -44,6 +44,10 @@ public class PessoaSeleniumTest {
             cpf += String.valueOf(random.nextInt(9));
         }
         int amountBefore = $("tbody").findAll("tr").size();
+        while ($("a[class='btn btn-info btn-proxima']").exists()) {
+            $("a[class='btn btn-info btn-proxima']").click();
+            amountBefore += $("tbody").findAll("tr").size();
+        }
         $$("a").findBy(Condition.text("Novo")).click();
         $("#nome").sendKeys("Teste da Silva");
         $("#apelido").sendKeys("Testin");
@@ -63,12 +67,23 @@ public class PessoaSeleniumTest {
         $("input[value=Salvar]").click();
         confirm("Pessoa salva com sucesso");
         $(byText("Listar")).click();
-        assert $("tbody").findAll("tr").size() > amountBefore;
+
+        int newAmount = $("tbody").findAll("tr").size();
+        while ($("a[class='btn btn-info btn-proxima']").exists()) {
+            $("a[class='btn btn-info btn-proxima']").click();
+            newAmount += $("tbody").findAll("tr").size();
+        }
+        assert newAmount > amountBefore;
     }
 
     @Test
     public void createPessoaInvalid(){
         int amountBefore = $("tbody").findAll("tr").size();
+        while ($("a[class='btn btn-info btn-proxima']").exists()) {
+            $("a[class='btn btn-info btn-proxima']").click();
+            amountBefore += $("tbody").findAll("tr").size();
+        }
+
         $$("a").findBy(Condition.text("Novo")).click();
         $("#nome").sendKeys("Teste da Silva");
         $("#apelido").sendKeys("Testin");
@@ -87,6 +102,12 @@ public class PessoaSeleniumTest {
         $("input[value=Salvar]").click();
         assert $("#cpfcnpj-error").isDisplayed();
         $(byText("Listar")).click();
-        assert $("tbody").findAll("tr").size() == amountBefore;
+
+        int newAmount = $("tbody").findAll("tr").size();
+        while ($("a[class='btn btn-info btn-proxima']").exists()) {
+            $("a[class='btn btn-info btn-proxima']").click();
+            newAmount += $("tbody").findAll("tr").size();
+        }
+        assert newAmount > amountBefore;
     }
 }
