@@ -34,7 +34,6 @@ public class LoginSeleniumTest {
         $("input[id=user]").sendKeys("gerente");
         $("input[id=password]").sendKeys("123");
         $("button[type=submit]").click();
-        System.out.println("");
         assert WebDriverRunner.getWebDriver().getCurrentUrl().equals("http://localhost:8080/");
 
     }
@@ -44,7 +43,6 @@ public class LoginSeleniumTest {
         $("input[id=user]").sendKeys("gerente");
         $("input[id=password]").sendKeys("saddasdas");
         $("button[type=submit]").click();
-        System.out.println("");
         assert WebDriverRunner.getWebDriver().getCurrentUrl().equals("http://localhost:8080/login?error");
     }
 
@@ -53,7 +51,15 @@ public class LoginSeleniumTest {
         $("input[id=user]").sendKeys("acscxzczfa");
         $("input[id=password]").sendKeys("123");
         $("button[type=submit]").click();
-        System.out.println("");
+        assert WebDriverRunner.getWebDriver().getCurrentUrl().equals("http://localhost:8080/login?error");
+    }
+
+    @Test
+    public void testSQLInjection() {
+        $("input[id=user]").sendKeys("' or '1'='1");
+        $("input[id=password]").sendKeys("' or '1'='1");
+        $("button[type=submit]").click();
+
         assert WebDriverRunner.getWebDriver().getCurrentUrl().equals("http://localhost:8080/login?error");
     }
 }

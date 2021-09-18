@@ -66,7 +66,7 @@ public class PessoaSeleniumTest {
         $("#tipo").sendKeys("CELULAR");
         $("input[value=Salvar]").click();
         confirm("Pessoa salva com sucesso");
-        $(byText("Listar")).click();
+        $$("span").find(Condition.text(" Listar")).click();
 
         int newAmount = $("tbody").findAll("tr").size();
         while ($("a[class='btn btn-info btn-proxima']").exists()) {
@@ -101,13 +101,13 @@ public class PessoaSeleniumTest {
         $("#tipo").sendKeys("CELULAR");
         $("input[value=Salvar]").click();
         assert $("#cpfcnpj-error").isDisplayed();
-        $(byText("Listar")).click();
+        $$("span").find(Condition.text(" Listar")).click();
 
         int newAmount = $("tbody").findAll("tr").size();
         while ($("a[class='btn btn-info btn-proxima']").exists()) {
             $("a[class='btn btn-info btn-proxima']").click();
             newAmount += $("tbody").findAll("tr").size();
         }
-        assert newAmount > amountBefore;
+        assert newAmount == amountBefore;
     }
 }
